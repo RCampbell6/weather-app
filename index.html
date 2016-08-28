@@ -55,219 +55,211 @@
 		<div id="attribution" class="container-fluid text-right">Icons made by <a href="www.freepik.com">Freepik</a> from <a href="www.flaticon.com">www.flaticon.com</a></div>
 	</footer>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-  <script>
-    $(document).ready(function() {
-
-    	function getWeather(url) {
-    		$.getJSON(url, function(weather) {
-    			$("#text").animate({
-    				opacity: 0
-    			}, 800);
-    			$("#info").animate({
-    				opacity: 0
-    			}, 800);
-    			$("#icon").animate({
-    				opacity: 0
-    			}, 800, function() {
-    				if (weather.sys.country == "US" || weather.sys.country == "BS" || weather.sys.country == "BZ" || weather.sys.country == "KY") {
-    					$("#unit-btn").html("&degC");
-    					$("#temp").html(cToF(Math.round(weather.main.temp - 273.16)) + "&degF");
-    				} else {
-    					$("#unit-btn").html("&degF");
-    					$("#temp").html(Math.round(weather.main.temp - 273.16) + "&degC");
-    				}
-    				$("#location").html(weather.name);
-    				$("#temp-window").css("border-color", "#f7cf52");
-    				document.forms["city-search-form"].reset();
-    
-    				//Get icon for weather. Temp-window movements to fit icon. Set descriptor text.
-    				var pathEnd = "";
-    				var description = "";
-    				var weatherID = weather.weather[0].id;
-    				var weatherDesc = weather.weather[0].description;
-    				var daytime = true;
-    				var currentTime = Date.now() / 1000;
-    				if ((currentTime > (weather.sys.sunset - 86400) && currentTime < weather.sys.sunrise) || (currentTime > weather.sys.sunset && (currentTime < weather.sys.sunrise + 86400))) {
-    					daytime = false;
-    				}
-    				//Change background, colours based on day/night
-    				if (daytime) {
-    					$("#temp-window").css(
-    						"background", "#99b6d2");					
-    					$("#night").animate({
-    						opacity: 0
-    					}, 800);
-    				} else {
-    					$("#temp-window").css(
-    						"background", "#38374d");					
-    					$("#night").animate({
-    						opacity: 1
-    					}, 800);
-    				}
-    
-    				//Thunderstorms
-    				if (weatherID > 199 && weatherID < 233) {
-    					pathEnd = "178/178343.svg";
-    					$("#temp-window").attr("class", "window-thunderstorm");
-    					description = "There is a " + weatherDesc + " over ";
-    				}
-    				//Drizzle
-    				else if ((weatherID > 299 && weatherID < 322) || (weatherID > 519 && weatherID < 532)) {
-    					if (daytime) {
-    						pathEnd = "178/178344.svg";
-    						$("#temp-window").attr("class", "window-drizzle-day");
-    					} else {
-    						pathEnd = "178/178345.svg";
-    						$("#temp-window").attr("class", "window-drizzle-night");
-    					}
-    					description = "A " + weatherDesc + " falls over ";
-    				}
-    				//Rain
-    				else if (weatherID > 499 && weatherID < 505) {
-    					pathEnd = "178/178340.svg";
-    					$("#temp-window").attr("class", "window-rain");
-    					description = "There is " + weatherDesc + " over ";
-    				}
-    				//Snow
-    				else if ((weatherID == 511) || (weatherID > 599 && weatherID < 623)) {
-    					pathEnd = "178/178330.svg";
-    					$("#temp-window").attr("class", "window-snow");
-    					description = "There is " + weatherDesc + " in ";
-    				}
-    				//Atmosphere - Mist, fog, sand etc.
-    				else if (weatherID > 700 && weatherID < 782) {
-    					pathEnd = "182/182264.svg";
-    					$("#temp-window").attr("class", "window-atmosphere");
-    					description = "There's " + weatherDesc + " over ";
-    				}
-    				//Clear
-    				else if (weatherID == 800) {
-    					if (daytime) {
-    						pathEnd = "178/178325.svg";
-    					} else {
-    						pathEnd = "178/178353.svg";
-    					}
-    					$("#temp-window").attr("class", "window-clear");
-    					description = "The skies are clear above ";
-    				}
-    				//Cloudy
-    				else if (weatherID == 801) {
-    					if (daytime) {
-    						pathEnd = "178/178342.svg";
-    						$("#temp-window").attr("class", "window-cloudy-day");
-    					} else {
-    						pathEnd = "178/178339.svg";
-    						$("#temp-window").attr("class", "window-cloudy-night");
-    					}
-    					description = "There are a few clouds over ";
-    				}
-    				//Cloudier
-    				else if (weatherID == 802) {
-    					pathEnd = "178/178338.svg";
-    					$("#temp-window").attr("class", "window-cloudier");
-    					description = "There are scattered clouds over ";
-    				}
-    				//Cloudiest
-    				else if (weatherID == 803 || weatherID == 804) {
-    					pathEnd = "178/178346.svg";
-    					$("#temp-window").attr("class", "window-cloudiest");
-    					description = "There are " + weatherDesc + " above ";
-    				}
-    				//TODO: Icons for various extremes.
-    				else {
-    					pathEnd = "178/178329.svg";
-    					$("#temp-window").attr("class", "window-thunderstorm");
-    					description = "There are " + weatherDesc + " conditions in ";
-    				}
-    
-    				//Apply data and stylings
-    				var svgURL = 'url("http://image.flaticon.com/icons/svg/' + pathEnd + '")';
-    				$("#icon").css("background-image", svgURL);
-    				$("#temp-window").css("display", "inline-block");
-    				$("#text").html(description + "<span class='text-highlight'><b>" + weather.name + ", " + weather.sys.country + "</b></span>");
-    				$("#pressure").html(weather.main.pressure + "hpa");
-    				$("#humidity").html(weather.main.humidity + "%");
-    				$("#wind-speed").html(weather.wind.speed + "m/s");
-    				$("#wind-direction").html(weather.wind.deg + "&deg");
-    
-    				$("#text").delay(200).animate({
-    					opacity: 1
-    				}, 800);
-    				$("#info").delay(200).animate({
-    					opacity: 1
-    				}, 800);
-    				$("#icon").delay(200).animate({
-    					opacity: 1
-    				}, 800);
-    
-    			});
-    
-    		});
-    	}
-
-    	//Form for manual city search
-    	$('.city-form').on('submit', function(e) {
-    		e.preventDefault();
-    		var searchValue = $(".city");
-    		if (searchValue.val() != "") {
-    			var cityURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(searchValue.val().toLowerCase()) + "&id=524901&APPID=06523fc226aebbf9b68b33f90aa0a876";
-    			getWeather(cityURL)
-    		} else {
-    			alert('Address cannot be blank!');
-    		}
-    	});
-
-    	function location(callback) {
-    		if (!navigator.geolocation){
-        alert("Geolocation is not supported by your browser");
-        return;
-      }
-    		function success(position) {
-        	var url = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&id=524901&APPID=06523fc226aebbf9b68b33f90aa0a876";
-    			callback(url);
-      };
-    		function error() {
-        alert("Unable to retrieve your location");
-      };
-    		var options = {enableHighAccuracy: true};
-    		navigator.geolocation.getCurrentPosition(success, error, options);
-    	}
-
-    	location(function(url) {
-    		getWeather(url);
-    	});
-    });
-
-$("#info-btn").on("click", function() {
-	$("#info").toggle("slow");
-});
-
-function cToF(temp) {
-	var f = Math.round((temp * 1.8) + 32);
-	return (f);
-}
-
-//Button to change between C/F
-$("#unit-btn").on("click", function() {
-	var str = $("#temp").text();
-	var degrees = parseInt(str.slice(0, str.length - 2));
-	$("#temp").animate({
-		opacity: 0
-	}, 200, function() {
-		if ($("#unit-btn").text()[1] === "F") {
-			$("#temp").html(Math.round((degrees * 1.8) + 32) + "&degF");
-			$("#unit-btn").html("&degC");
-		} else {
-			$("#temp").html(Math.round((degrees - 32) / 1.8) + "&degC");
-			$("#unit-btn").html("&degF");
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+	<script>
+	  	$(document).ready(function () {
+			function getWeather(url) {
+			        $.getJSON(url, function (weather) {
+			        	$("#text").animate({
+			                	opacity: 0
+			                }, 800);
+			        	$("#info").animate({
+			                	opacity: 0
+			            	}, 800);
+			        	$("#icon").animate({
+			                	opacity: 0
+			            	}, 800, function () {
+				                if (weather.sys.country == "US" || weather.sys.country == "BS" || weather.sys.country == "BZ" || weather.sys.country == "KY") {
+				                	$("#unit-btn").html("&degC");
+				                    	$("#temp").html(cToF(Math.round(weather.main.temp - 273.16)) + "&degF");
+				                } else {
+				                    	$("#unit-btn").html("&degF");
+				                    	$("#temp").html(Math.round(weather.main.temp - 273.16) + "&degC");
+				                }
+				                $("#location").html(weather.name);
+				                $("#temp-window").css("border-color", "#f7cf52");
+				                document.forms["city-search-form"].reset();
+				
+				                //Get icon for weather. Temp-window movements to fit icon. Set descriptor text.
+				                var pathEnd = "";
+				                var description = "";
+				                var weatherID = weather.weather[0].id;
+				                var weatherDesc = weather.weather[0].description;
+				                var daytime = true;
+				                var currentTime = Date.now() / 1000;
+				                if ((currentTime > (weather.sys.sunset - 86400) && currentTime < weather.sys.sunrise) || (currentTime > weather.sys.sunset && (currentTime < weather.sys.sunrise + 86400))) {
+				                	daytime = false;
+				                }
+				                //Change background, colours based on day/night
+				                if (daytime) {
+				                    	$("#temp-window").css(
+				                        	"background", "#99b6d2"
+				                       	);	
+				                    	$("#night").animate({
+				                        	opacity: 0
+				                    	}, 800);
+				                } else {
+				                    	$("#temp-window").css(
+				                        	"background", "#38374d"
+				                        );
+				                    	$("#night").animate({
+				                        	opacity: 1
+				                    	}, 800);
+				                }
+				
+				                //Thunderstorms
+				                if (weatherID > 199 && weatherID < 233) {
+				                    	pathEnd = "178/178343.svg";
+				                    	$("#temp-window").attr("class", "window-thunderstorm");
+				                    	description = "There is a " + weatherDesc + " over ";
+				                }
+				                //Drizzle
+				                else if ((weatherID > 299 && weatherID < 322) || (weatherID > 519 && weatherID < 532)) {
+				                    	if (daytime) {
+				                        	pathEnd = "178/178344.svg";
+				                        	$("#temp-window").attr("class", "window-drizzle-day");
+				                    	} else {
+				                        	pathEnd = "178/178345.svg";
+				                        	$("#temp-window").attr("class", "window-drizzle-night");
+				                    	}
+				                    	description = "A " + weatherDesc + " falls over ";
+				                }
+				                //Rain
+				                else if (weatherID > 499 && weatherID < 505) {
+				                    	pathEnd = "178/178340.svg";
+				                    	$("#temp-window").attr("class", "window-rain");
+				                    	description = "There is " + weatherDesc + " over ";
+				                }
+				                //Snow
+				                else if ((weatherID == 511) || (weatherID > 599 && weatherID < 623)) {
+				                    	pathEnd = "178/178330.svg";
+				                    	$("#temp-window").attr("class", "window-snow");
+				                    	description = "There is " + weatherDesc + " in ";
+				                }
+				                //Atmosphere - Mist, fog, sand etc.
+				                else if (weatherID > 700 && weatherID < 782) {
+				                    	pathEnd = "182/182264.svg";
+				                    	$("#temp-window").attr("class", "window-atmosphere");
+				                    	description = "There's " + weatherDesc + " over ";
+				                }
+				                //Clear
+				                else if (weatherID == 800) {
+				                   	if (daytime) {
+				                        	pathEnd = "178/178325.svg";
+				                    	} else {
+				                        	pathEnd = "178/178353.svg";
+				                    	}
+				                    	$("#temp-window").attr("class", "window-clear");
+				                    	description = "The skies are clear above ";
+				                }
+				                //Cloudy
+				                else if (weatherID == 801) {
+				                    	if (daytime) {
+				                        	pathEnd = "178/178342.svg";
+				                        	$("#temp-window").attr("class", "window-cloudy-day");
+				                    	} else {
+				                        	pathEnd = "178/178339.svg";
+				                        	$("#temp-window").attr("class", "window-cloudy-night");
+				                    	}
+				                    	description = "There are a few clouds over ";
+				                }
+				                //Cloudier
+				                else if (weatherID == 802) {
+				                    	pathEnd = "178/178338.svg";
+				                    	$("#temp-window").attr("class", "window-cloudier");
+				                    	description = "There are scattered clouds over ";
+				                }
+				                //Cloudiest
+				                else if (weatherID == 803 || weatherID == 804) {
+				                	pathEnd = "178/178346.svg";
+				                	$("#temp-window").attr("class", "window-cloudiest");
+				                	description = "There are " + weatherDesc + " above ";
+				                }
+				                //TODO: Icons for various extremes.
+				                else {
+				                	pathEnd = "178/178329.svg";
+				                	$("#temp-window").attr("class", "window-thunderstorm");
+				                	description = "There are " + weatherDesc + " conditions in ";
+				                }
+				
+				                //Apply data and stylings
+				                var svgURL = 'url("http://image.flaticon.com/icons/svg/' + pathEnd + '")';
+				                $("#icon").css("background-image", svgURL);
+				                $("#temp-window").css("display", "inline-block");
+				                $("#text").html(description + "<span class='text-highlight'><b>" + weather.name + ", " + weather.sys.country + "</b></span>");
+				                $("#pressure").html(weather.main.pressure + "hpa");
+				                $("#humidity").html(weather.main.humidity + "%");
+				                $("#wind-speed").html(weather.wind.speed + "m/s");
+				                $("#wind-direction").html(weather.wind.deg + "&deg");
+				
+				                $("#text").delay(200).animate({
+				                	opacity: 1
+				                }, 800);
+				                $("#info").delay(200).animate({
+				                	opacity: 1
+				                }, 800);
+				                $("#icon").delay(200).animate({
+				                	opacity: 1
+				                }, 800);
+				      	});
+			        });
+			}
+		    	//Form for manual city search
+		    	$('.city-form').on('submit', function (e) {
+		        	e.preventDefault();
+		        	var searchValue = $(".city");
+		        	if (searchValue.val() != "") {
+		            		var cityURL = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=" + encodeURIComponent(searchValue.val().toLowerCase()) + "&id=524901&APPID=06523fc226aebbf9b68b33f90aa0a876";
+		            		getWeather(cityURL)
+		        	} else {
+		            	alert('Address cannot be blank!');
+		        	}
+		    	});
+		    	function location(callback) {
+		        	if (!navigator.geolocation) {
+		            		alert("Geolocation is not supported by your browser");
+		            		return;
+		        	}
+		        	function success(position) {
+		            		var url = "https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&id=524901&APPID=06523fc226aebbf9b68b33f90aa0a876";
+		            		callback(url);
+		        	};
+		        	function error() {
+		            		alert("Unable to retrieve your location");
+		        	};
+		        	var options = { enableHighAccuracy: true };
+		        	navigator.geolocation.getCurrentPosition(success, error, options);
+		    	}
+		    	location(function (url) {
+		        	getWeather(url);
+		    	});
+		});
+	
+		function cToF(temp) {
+			var f = Math.round((temp * 1.8) + 32);
+			return (f);
 		}
-		$("#temp").animate({
-			opacity: 1
-		}, 200);
-	});
-});
-  </script>
+	
+		//Button to change between C/F
+		$("#unit-btn").on("click", function () {
+			var str = $("#temp").text();
+			var degrees = parseInt(str.slice(0, str.length - 2));
+			$("#temp").animate({
+		        	opacity: 0
+		    	}, 200, function () {
+		        	if ($("#unit-btn").text()[1] === "F") {
+		            		$("#temp").html(Math.round((degrees * 1.8) + 32) + "&degF");
+		            		$("#unit-btn").html("&degC");
+		        	} else {
+		            		$("#temp").html(Math.round((degrees - 32) / 1.8) + "&degC");
+		            		$("#unit-btn").html("&degF");
+		        	}
+		        	$("#temp").animate({
+		            		opacity: 1
+		        	}, 200);
+		    	});
+		});
+	</script>
 </body>
 </html>
