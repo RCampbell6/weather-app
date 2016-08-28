@@ -1,0 +1,210 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+#attribution {
+  margin: 10px 0 0 0;
+}
+#attribution a {
+  color: #f7cf52;
+}
+
+input[type="text"] {
+  background: transparent;
+  border: 0;
+  color: #fff;
+}
+input[type="text"]:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+input::-webkit-input-placeholder {
+  color: inherit !important;
+}
+
+input:-moz-placeholder {
+  color: inherit !important;
+}
+
+input::-moz-placeholder {
+  color: inherit !important;
+}
+
+input:-ms-input-placeholder {
+  color: inherit !important;
+}
+
+#icon {
+  background-image: url("http://image.flaticon.com/icons/svg/178/178354.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  font-size: 5.5vh;
+  font-weight: bold;
+  height: 40vh;
+  margin: 20px 0 5px;
+}
+
+#info {
+  font-size: 3vmin;
+  opacity: 0;
+}
+#info p {
+  margin: 5px 0;
+}
+
+#city-search {
+  border-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#search-button {
+  background: transparent;
+  border: 0;
+  color: #fff;
+}
+#search-button:focus {
+  outline: 0;
+}
+
+#unit-btn {
+  background: Transparent;
+  border: 2px solid;
+  border-color: inherit;
+  border-radius: 50%;
+  color: inherit;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 5vmin;
+  font-weight: bold;
+  height: 10vmin;
+  margin: 12px 0 20px;
+  outline: none;
+  padding: 2px 3px 0 0;
+  width: 10vmin;
+}
+#unit-btn:active {
+  opacity: 0.9;
+}
+
+#temp-window {
+  background: #38374d;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 3px;
+  color: inherit;
+  display: none;
+  height: 14vh;
+  padding: 0 2px 2px 0;
+  position: relative;
+  top: 50%;
+  width: 14vh;
+}
+#temp-window span {
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#text {
+  font-size: 8vmin;
+}
+
+#wrapper {
+  height: 100%;
+}
+
+.background-day {
+  background: #699bc8;
+  background: -moz-radial-gradient(top right, ellipse cover, #699bc8 0%, #b5c5d8 77%);
+  background: -webkit-gradient(radial, top right, 0px, top right, 100%, color-stop(0%, #699bc8), color-stop(77%, #b5c5d8));
+  background: -webkit-radial-gradient(top right, ellipse cover, #699bc8 0%, #b5c5d8 77%);
+  background: -o-radial-gradient(top right, ellipse cover, #699bc8 0%, #b5c5d8 77%);
+  background: -ms-radial-gradient(top right, ellipse cover, #699bc8 0%, #b5c5d8 77%);
+  background: radial-gradient(ellipse at top right, #699bc8 0%, #b5c5d8 77%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = "#699bc8", endColorstr = "#b5c5d8", GradientType = 1);
+}
+
+.background-night {
+  background: #282537;
+  background: -webkit-radial-gradient(top, circle farthest-corner, #3c3b52 0%, #252233 75%);
+  background: -moz-radial-gradient(top, circle farthest-corner, #3c3b52 0%, #252233 75%);
+  background: -o-radial-gradient(top, circle farthest-corner, #3c3b52 0%, #252233 75%);
+  background: radial-gradient(circle farthest-corner at top, #3c3b52 0%, #252233 75%);
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+}
+
+.text-highlight {
+  color: #f7cf52;
+}
+
+.window-atmosphere {
+  transform: translateY(-50%);
+}
+
+.window-default {
+  border-color: #1ea6c6;
+  transform: translateY(-50%);
+}
+
+.window-clear {
+  margin-left: 1px;
+  transform: translateY(-50%);
+}
+
+.window-cloudier {
+  transform: translateY(-30%);
+}
+
+.window-cloudiest {
+  transform: translateY(-29%);
+}
+
+.window-cloudy-day {
+  transform: translateY(8%);
+}
+
+.window-cloudy-night {
+  transform: translateY(0%);
+}
+
+.window-drizzle-day {
+  transform: translateY(-38%);
+}
+
+.window-drizzle-night {
+  transform: translateY(-48%);
+}
+
+.window-rain {
+  transform: translateY(-78%);
+}
+
+.window-snow {
+  border-color: #008db3;
+  margin-left: 1px;
+  transform: translateY(-50%);
+}
+
+.window-thunderstorm {
+  transform: translateY(-85%);
+}
