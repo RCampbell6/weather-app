@@ -98,7 +98,7 @@ $(document).ready(function () {
                     description = " lies under " + desc + ".";
                 }
                     //Atmosphere - Dust, fog, smoke etc.
-                else if (weatherID > 18 && weatherID < 24) {
+                else if (weatherID > 18 && weatherID < 23) {
                     pathEnd = "182/182264.svg";
                     $("#temp-window").attr("class", "window-atmosphere");
                     if (weatherID == 19) {
