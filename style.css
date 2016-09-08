@@ -167,6 +167,10 @@ input:-ms-input-placeholder {
   transform: translateY(-50%);
 }
 
+.window-breezy {
+	transform: translateY(-39%);
+}
+
 .window-default {
   border-color: #1ea6c6;
   transform: translateY(-50%);
