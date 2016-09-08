@@ -143,12 +143,14 @@ $(document).ready(function () {
                 }
                     //TODO: Icons for various extremes.
                 else {
-                    pathEnd = "178/178329.svg";
                     if (weatherID == 23) {
-                        pathEnd = "178/178328.svg";
-                    }
-                    $("#temp-window").attr("class", "window-thunderstorm");
-                    description = "There are " + weatherDesc + " conditions in ";
+						pathEnd = "178/178328.svg";
+						$("#temp-window").attr("class", "window-breezy");						
+					} else {
+						pathEnd = "178/178329.svg";
+						$("#temp-window").attr("class", "window-thunderstorm");						
+					}
+					description = "There are " + weatherDesc + " conditions in ";
                 }
 
                 //Apply data and stylings
