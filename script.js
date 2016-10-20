@@ -8,7 +8,7 @@ $(document).ready(function () {
                 $("#content").animate({
                     opacity: 0
                 }, 800, function () {
-                    $("#icon").css("background-image", 'url("http://image.flaticon.com/icons/svg/178/178354.svg")');
+                    $("#icon").css("background-image", 'url("images/earth.png")');
                     $("#temp-window").css("display", "none");
                     $("#info").css("opacity", "0");
                     $("#text").html("City not recognised. Please try again.");
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 document.forms["city-search-form"].reset();
 
                 //Get icon for weather. Temp-window movements to fit icon. Set descriptor text.
-                var pathEnd = "";
+                var image = "";
                 var description = "";
                 var weatherID = weatherPath.item.condition.code;
                 var weatherDesc = weatherPath.item.condition.text.toLowerCase();
@@ -68,38 +68,38 @@ $(document).ready(function () {
 
                 //Thunderstorms
                 if (weatherID == 3 || weatherID == 4 || (weatherID > 36 && weatherID < 39) || weatherID == 45 || weatherID == 47) {
-                    pathEnd = "178/178343.svg";
+                    image = "images/storm.svg";
                     $("#temp-window").attr("class", "window-thunderstorm");
                     description = "There are " + weatherDesc + " over ";
                 }
                     //Drizzle
                 else if (weatherID == 8 || weatherID == 9) {
                     if (daytime) {
-                        pathEnd = "178/178344.svg";
+                        image = "images/drizzleday.png";
                         $("#temp-window").attr("class", "window-drizzle-day");
                     } else {
-                        pathEnd = "178/178345.svg";
+                        image = "images/drizzlenight.png";
                         $("#temp-window").attr("class", "window-drizzle-night");
                     }
                     description = "A " + weatherDesc + " falls over ";
                 }
                     //Rain
                 else if (weatherID == 11 || weatherID == 12 || weatherID == 39 || weatherID == 40) {
-                    pathEnd = "178/178340.svg";
+                    image = "images/rain.png";
                     $("#temp-window").attr("class", "window-rain");
                     description = "There are " + weatherDesc + " over ";
                 }
                     //Snow
                 else if ((weatherID > 4 && weatherID < 8) || weatherID == 10 || (weatherID > 12 && weatherID < 17) || weatherID == 18 || (weatherID > 40 && weatherID < 44) || weatherID == 46) {
                     weatherType = "snow";
-                    pathEnd = "178/178330.svg";
+                    image = "images/snowflake.svg";
                     $("#temp-window").attr("class", "window-snow");
                     var desc = weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1);
                     description = " lies under " + desc + ".";
                 }
                     //Atmosphere - Dust, fog, smoke etc.
                 else if (weatherID > 18 && weatherID < 23) {
-                    pathEnd = "182/182264.svg";
+                    image = "images/haze.svg";
                     $("#temp-window").attr("class", "window-atmosphere");
                     if (weatherID == 19) {
                         weatherDesc = "dusty";
@@ -111,9 +111,9 @@ $(document).ready(function () {
                     //Clear
                 else if (weatherID > 30 && weatherID < 35) {
                     if (daytime) {
-                        pathEnd = "178/178325.svg";
+                        image = "images/sun.svg";
                     } else {
-                        pathEnd = "178/178353.svg";
+                        image = "images/moon.svg";
                     }
                     $("#temp-window").attr("class", "window-clear");
                     description = "The skies are clear above ";
@@ -121,41 +121,41 @@ $(document).ready(function () {
                     //Cloudy
                 else if (weatherID == 29 || weatherID == 30 || weatherID == 44) {
                     if (daytime) {
-                        pathEnd = "178/178342.svg";
+                        image = "images/cloudyday.png";
                         $("#temp-window").attr("class", "window-cloudy-day");
                     } else {
-                        pathEnd = "178/178339.svg";
+                        image = "images/cloudynight.png";
                         $("#temp-window").attr("class", "window-cloudy-night");
                     }
                     description = "There are a few clouds over ";
                 }
                     //Cloudier
                 else if (weatherID == 27 || weatherID == 28) {
-                    pathEnd = "178/178338.svg";
+                    image = "images/cloudier.png";
                     $("#temp-window").attr("class", "window-cloudier");
                     description = "It is mostly cloudy over ";
                 }
                     //Cloudiest
                 else if (weatherID == 26) {
-                    pathEnd = "178/178346.svg";
+                    image = "images/cloudiest.png";
                     $("#temp-window").attr("class", "window-cloudiest");
                     description = "It is cloudy above ";
                 }
                     //TODO: Icons for various extremes.
                 else {
                     if (weatherID == 23) {
-						pathEnd = "178/178328.svg";
-						$("#temp-window").attr("class", "window-breezy");						
-					} else {
-						pathEnd = "178/178329.svg";
-						$("#temp-window").attr("class", "window-thunderstorm");						
-					}
-					description = "There are " + weatherDesc + " conditions in ";
+							  image = "images/breeze.png";
+							  $("#temp-window").attr("class", "window-breezy");						
+						  } else {
+							  image = "images/tornado.png";
+							  $("#temp-window").attr("class", "window-thunderstorm");						
+						  }
+						description = "There are " + weatherDesc + " conditions in ";
                 }
 
                 //Apply data and stylings
-                var svgURL = 'url("http://image.flaticon.com/icons/svg/' + pathEnd + '")';
-                $("#icon").css("background-image", svgURL);
+                var svgURL = 'url("images/tornado.png")';
+                $("#icon").css("background-image", "url('" + image + "')");
                 $("#temp-window").css("display", "inline-block");
                 if (weatherType == "snow") {
                     $("#text").html("<span class='text-highlight'><b>" + weatherPath.location.city + ", " + weatherPath.location.country + "</b></span>" + description);

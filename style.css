@@ -45,9 +45,10 @@ input:-ms-input-placeholder {
 }
 
 #icon {
-  background-image: url("http://image.flaticon.com/icons/svg/178/178354.svg");
+  background-image: url("images/earth.png");
   background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
   font-size: 5.5vh;
   font-weight: bold;
   height: 40vh;
