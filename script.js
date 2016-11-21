@@ -87,15 +87,18 @@ $(document).ready(function () {
                 else if (weatherID == 11 || weatherID == 12 || weatherID == 39 || weatherID == 40) {
                     image = "images/rain.png";
                     $("#temp-window").attr("class", "window-rain");
-                    description = "There are " + weatherDesc + " over ";
+						  if (weatherID == 12) {
+								description = "There is " + weatherDesc + " over ";
+						  } else {
+								description = "There are " + weatherDesc + " over ";
+						  }                    
                 }
                     //Snow
                 else if ((weatherID > 4 && weatherID < 8) || weatherID == 10 || (weatherID > 12 && weatherID < 17) || weatherID == 18 || (weatherID > 40 && weatherID < 44) || weatherID == 46) {
                     weatherType = "snow";
                     image = "images/snowflake.svg";
                     $("#temp-window").attr("class", "window-snow");
-                    var desc = weatherDesc.charAt(0).toUpperCase() + weatherDesc.slice(1);
-                    description = " lies under " + desc + ".";
+                    description = " lies under " + weatherDesc;
                 }
                     //Atmosphere - Dust, fog, smoke etc.
                 else if (weatherID > 18 && weatherID < 23) {
@@ -154,7 +157,6 @@ $(document).ready(function () {
                 }
 
                 //Apply data and stylings
-                var svgURL = 'url("images/tornado.png")';
                 $("#icon").css("background-image", "url('" + image + "')");
                 $("#temp-window").css("display", "inline-block");
                 if (weatherType == "snow") {
